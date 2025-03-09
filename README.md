@@ -54,9 +54,6 @@ python -m unittest client.py
 ## License
 This project is provided under the MIT License.
 
-## Contributors
-- [Your Name]
-
 ## Future Improvements
 - Implement a visualization dashboard.
 
