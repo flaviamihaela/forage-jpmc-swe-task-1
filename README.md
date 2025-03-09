@@ -51,9 +51,3 @@ python -m unittest client.py
 - Tests correct computation of stock prices.
 - Validates the behavior of `getRatio()` under different scenarios.
 
-## License
-This project is provided under the MIT License.
-
-## Future Improvements
-- Implement a visualization dashboard.
-
