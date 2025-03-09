@@ -30,30 +30,34 @@ N = 500
 
 
 def getDataPoint(quote):
-    """ Produce all the needed values to generate a datapoint """
-    """ ------------- Update this function ------------- """
+    """Process stock quote and compute mid-price."""
     stock = quote['stock']
     bid_price = float(quote['top_bid']['price'])
     ask_price = float(quote['top_ask']['price'])
-    price = bid_price
+    price = (bid_price + ask_price) / 2  # Fix: Use midpoint of bid and ask prices
     return stock, bid_price, ask_price, price
 
 
 def getRatio(price_a, price_b):
-    """ Get ratio of price_a and price_b """
-    """ ------------- Update this function ------------- """
-    return 1
+    """Compute the ratio of price_a to price_b, handling division by zero."""
+    if price_b == 0:
+        return None  # Avoid division by zero
+    return price_a / price_b
 
 
 # Main
 if __name__ == "__main__":
     # Query the price once every N seconds.
-    for _ in iter(range(N)):
+    for _ in range(N):
         quotes = json.loads(urllib.request.urlopen(QUERY.format(random.random())).read())
-
-        """ ----------- Update to get the ratio --------------- """
+        stock_prices = {}
+        
         for quote in quotes:
             stock, bid_price, ask_price, price = getDataPoint(quote)
-            print("Quoted %s at (bid:%s, ask:%s, price:%s)" % (stock, bid_price, ask_price, price))
-
-        print("Ratio %s" % getRatio(price, price))
+            stock_prices[stock] = price
+            print(f"Quoted {stock} at (bid:{bid_price}, ask:{ask_price}, price:{price})")
+        
+        # Compute ratio between ABC and DEF
+        if "ABC" in stock_prices and "DEF" in stock_prices:
+            ratio = getRatio(stock_prices["ABC"], stock_prices["DEF"])
+            print(f"Ratio {ratio}")
